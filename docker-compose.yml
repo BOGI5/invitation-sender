@@ -1,0 +1,21 @@
+services:
+  web:
+    build: .
+    ports:
+      - 5000:5000
+    environment:
+      - DATABASE_URL=mysql+pymysql://user:user@mysql/invitation_sender
+    depends_on:
+      - mysql
+    volumes:
+      - .:/usr/src/app
+
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: invitation_sender
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
