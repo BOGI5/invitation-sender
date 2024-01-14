@@ -1,5 +1,5 @@
 {% extends "header.html" %}
-{% block title %}Create{% endblock %}
+{% block title %}Sign up{% endblock %}
 {% block body %}
 <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">Billing address</h4>
@@ -21,10 +21,18 @@
             </div>
 
             <div class="col-12">
-              <label for="email" class="form-label">Email <span class="text-body-secondary">(Optional)</span></label>
+              <label for="email" class="form-label">Email</label>
               <input name="email" class="form-control" id="email" placeholder="you@example.com">
               <div class="invalid-feedback">
                 Please enter a valid email address for shipping updates.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="password" class="form-label">Password</label>
+              <input name="password" class="form-control" id="password" type="password" placeholder="">
+              <div class="invalid-feedback">
+                Please enter a valid password for shipping updates.
               </div>
             </div>
           <hr class="my-4">

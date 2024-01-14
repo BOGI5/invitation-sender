@@ -1,5 +1,7 @@
 flask
 flask-sqlalchemy
 flask-mail
+flask-login
 PyMySQL
 cryptography
+jinja2

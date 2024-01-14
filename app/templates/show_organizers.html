@@ -1,0 +1,16 @@
+{% extends "header.html" %}
+{% block title %}Show{% endblock %}
+{% block body %}
+<div class="block">
+{% if organizers|length == 0 %}
+    <p>No organizers</p>
+    {% else %}
+    {% for organizer in organizers %}
+        <div class="alert alert-info">
+        <h1>{{ organizer["first_name"]}} {{organizer["last_name"]}}</h1>
+        <p>{{ organizer["email"] }}</p>
+        </div>
+    {% endfor %}
+{% endif %}
+    </div>
+{% endblock %}
