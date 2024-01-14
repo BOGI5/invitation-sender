@@ -10,7 +10,7 @@ def index():
 
 @app.route('/show_organizer')
 def show_organizer():
-    return jsonify(invitation=Organizer.query.all())
+    return jsonify(Organizer.query.all())
 
 
 @app.route('/create_organizer', methods=['POST', 'GET'])
@@ -22,6 +22,6 @@ def create_organizer():
         organizer = Organizer(first_name=first_name, last_name=last_name, email=email)
         db.session.add(organizer)
         db.session.commit()
-        return redirect(url_for('show_organizer'))
+        return redirect('/show_organizer')
     elif request.method == 'GET':
         return render_template('create_organizer.html')

@@ -1,2 +1,2 @@
 class Config:
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://user:user@localhost/invitation_sender'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://user:user@mysql/invitation_sender'
