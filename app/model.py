@@ -2,8 +2,8 @@ from app import db
 from flask_login import UserMixin
 
 
-class Organizer(db.Model, UserMixin):
-    __tablename__ = 'organizers'
+class User(db.Model, UserMixin):
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(80), nullable=False)
     last_name = db.Column(db.String(80), nullable=False)
@@ -17,7 +17,7 @@ class Organizer(db.Model, UserMixin):
         self.password = password
 
     def __repr__(self):
-        return f"<Organizer(name={self.first_name + ' ' + self.last_name}, email={self.email}"
+        return f"<User(name={self.first_name + ' ' + self.last_name}, email={self.email}"
 
 
 class Event(db.Model):
@@ -26,7 +26,7 @@ class Event(db.Model):
     name = db.Column(db.String(50), nullable=False)
     date = db.Column(db.DateTime, nullable=False)
     address = db.Column(db.String(250), nullable=False)
-    organizer_id = db.Column(db.Integer, db.ForeignKey('organizers.id'))
+    organizer_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __init__(self, name, date, address, organizer_id):
         self.name = name

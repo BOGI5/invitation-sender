@@ -6,7 +6,7 @@
         <form class="needs-validation" method="post">
             <div class="col-sm-6">
               <label for="first_name" class="form-label">First name</label>
-              <input name="first_name" type="text" class="form-control" id="first_name" placeholder="" value="" required="">
+              <input name="first_name" type="text" class="form-control" id="first_name" placeholder="" value="" required="" minlength="1" maxlength="80">
               <div class="invalid-feedback">
                 Valid first name is required.
               </div>
@@ -14,7 +14,7 @@
 
             <div class="col-sm-6">
               <label for="last_name" class="form-label">Last name</label>
-              <input name="last_name" type="text" class="form-control" id="last_name" placeholder="" value="" required="">
+              <input name="last_name" type="text" class="form-control" id="last_name" placeholder="" value="" required="" minlength="1" maxlength="80">
               <div class="invalid-feedback">
                 Valid last name is required.
               </div>
@@ -22,7 +22,7 @@
 
             <div class="col-12">
               <label for="email" class="form-label">Email</label>
-              <input name="email" class="form-control" id="email" placeholder="you@example.com">
+              <input name="email" class="form-control" id="email" placeholder="you@example.com" minlength="1" maxlength="80">
               <div class="invalid-feedback">
                 Please enter a valid email address for shipping updates.
               </div>
@@ -30,7 +30,7 @@
 
             <div class="col-12">
               <label for="password" class="form-label">Password</label>
-              <input name="password" class="form-control" id="password" type="password" placeholder="">
+              <input name="password" class="form-control" id="password" type="password" placeholder="" minlength="1" maxlength="80">
               <div class="invalid-feedback">
                 Please enter a valid password for shipping updates.
               </div>

@@ -2,13 +2,13 @@
 {% block title %}Show{% endblock %}
 {% block body %}
 <div class="block">
-{% if organizers|length == 0 %}
-    <p>No organizers</p>
+{% if users|length == 0 %}
+    <p>No users</p>
     {% else %}
-    {% for organizer in organizers %}
+    {% for user in users %}
         <div class="alert alert-info">
-        <h1>{{ organizer["first_name"]}} {{organizer["last_name"]}}</h1>
-        <p>{{ organizer["email"] }}</p>
+        <h1>{{ user["first_name"]}} {{ user["last_name"] }}</h1>
+        <p>{{ user["email"] }}</p>
         </div>
     {% endfor %}
 {% endif %}
