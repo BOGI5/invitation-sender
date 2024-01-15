@@ -15,6 +15,7 @@ Events
         <h1>{{ event["name"] }}</h1>
         <h3>{{ event["date"] }}</h3>
         <p>{{ event["address"] }}</p>
+        <a href="/show_invitations/{{ event['id'] }}" class="btn btn-success">Invitations</a>
         <a href="/delete_event/{{ event['id'] }}" class="btn btn-danger">Delete</a>
         {% endfor %}
 {% endif %}

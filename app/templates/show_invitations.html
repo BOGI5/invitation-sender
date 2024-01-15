@@ -1,0 +1,29 @@
+{% extends "header.html" %}
+{% block title %}Invitations{% endblock %}
+{% block body %}
+<div class="container">
+    <a href="/create_invitation/{{ event_id }}" class="btn btn-success">Add</a><br>
+{% if invitations|length == 0 %}
+    <p>No invitations</p>
+    {% else %}
+    {% for invitation in invitations %}
+        <div class="alert alert-info">
+        <h1>{{ invitation["recipient_names"]}}</h1>
+        <p>{{ invitation["recipient_email"] }}</p>
+        <p>{{ invitation["pin"] }}</p>
+        {% if invitation['replied'] %}
+            <p class="btn btn-success">Replied</p>
+            {% if invitation['attendance'] %}
+                <p class="btn btn-success">Joined</p>
+            {% else %}
+                <p class="btn btn-danger">Rejected</p>
+            {% endif %}
+        {% else %}
+            <p class="btn btn-warning">Not replied</p>
+        {% endif %}
+            <br><a href="/delete_invitation/{{ invitation['id'] }}" class="btn btn-danger">Delete</a>
+        </div>
+    {% endfor %}
+{% endif %}
+    </div>
+{% endblock %}

@@ -1,5 +1,6 @@
 from app import db
 from flask_login import UserMixin
+from random import randint
 
 
 class User(db.Model, UserMixin):
@@ -46,11 +47,17 @@ class Invitation(db.Model):
     recipient_email = db.Column(db.String(80), nullable=False)
     replied = db.Column(db.Boolean, nullable=False, default=False)
     attendance = db.Column(db.Boolean, nullable=False, default=False)
+    pin = db.Column(db.String(6), nullable=False)
+
+    __table_args__ = (
+        db.UniqueConstraint('recipient_email', 'event_id'),
+    )
 
     def __init__(self, event_id, recipient_names, recipient_email):
         self.event_id = event_id
         self.recipient_names = recipient_names
         self.recipient_email = recipient_email
+        self.pin = str(randint(100000, 999999))
 
     def __repr__(self):
         return f"<Invitation(recipient='{self.recipient_names}', replied='{self.replied}, attendance='{self.attendance}')>"

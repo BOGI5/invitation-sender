@@ -1,0 +1,23 @@
+{% extends "header.html" %}
+{% block title %}Reply to {{ event['name'] }}{% endblock %}
+{% block body %}
+<div class="alert alert-info">
+        <h1>{{ event["name"] }}</h1>
+        <h3>{{ event["date"] }}</h3>
+        <p>{{ event["address"] }}</p>
+    <form method="post">
+        <label>
+            <input type="radio" name="reply" value="yes">
+            I'm in!
+        </label>
+        <br>
+        <label>
+            <input type="radio" name="reply" value="no">
+            I'm not in.
+        </label>
+        <br>
+        <label for="pin">PIN</label><input type="password" id="pin" name="pin" placeholder="6-digit pin">
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+{% endblock %}
