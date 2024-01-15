@@ -90,7 +90,7 @@ def add_invitation(request, event_id):
                             recipient_email=request.form['email'], recipient_names=request.form['names'])
     db.session.add(invitation)
     db.session.commit()
-    # send_invitation(invitation)
+    send_invitation(invitation)
     return invitation.id
 
 
@@ -104,9 +104,9 @@ def delete_invitation(invitation_id):
 
 def send_invitation(invitation):
     message = Message(subject="Invitation", recipients=[invitation.recipient_email])
-    message.body = str(invitation.recipient_names + ",\n" + "You're invited!" + "Please go to the " +
+    message.body = str(invitation.recipient_names + ",\n" + "You're invited!" + " Please go to the " +
                  url_for('reply_invitation', invitation_id=invitation.id, _external=True) +
-                 " to confirm your attendance on this event.\n Your pin: " + invitation.pin)
+                 " to confirm your attendance on this event.\nYour pin: " + invitation.pin)
     mail.send(message)
 
 

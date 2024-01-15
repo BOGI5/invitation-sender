@@ -10,7 +10,6 @@
         <div class="alert alert-info">
         <h1>{{ invitation["recipient_names"]}}</h1>
         <p>{{ invitation["recipient_email"] }}</p>
-        <p>{{ invitation["pin"] }}</p>
         {% if invitation['replied'] %}
             <p class="btn btn-success">Replied</p>
             {% if invitation['attendance'] %}
