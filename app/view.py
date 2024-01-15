@@ -1,7 +1,6 @@
-from flask import request, render_template, url_for, redirect, jsonify
-from flask_login import login_user, logout_user, current_user
-from app import app
-from app.model import *
+from flask import request, render_template, url_for, redirect
+from flask_login import logout_user, current_user
+from app.controller import *
 
 
 @app.route('/')
@@ -12,20 +11,14 @@ def index():
 
 @app.route('/show_users')
 def show_users():
-    return render_template("show_users.html", users=User.query.all(), user=current_user)
+    return render_template("show_users.html", users=get_users(), user=current_user)
 
 
 @app.route('/sign_up', methods=['POST', 'GET'])
 def sign_up():
     if request.method == 'POST':
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        email = request.form['email']
-        password = request.form['password']
-        user = User(first_name=first_name, last_name=last_name, email=email, password=password)
-        db.session.add(user)
-        db.session.commit()
-        return redirect('/show_users')
+        create_user(request)
+        return redirect('/user_information')
     elif request.method == 'GET':
         return render_template('sign_up.html', user=current_user)
 
@@ -33,18 +26,10 @@ def sign_up():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
-        user = User.query.filter_by(email=request.form['email']).first()
-        if user.password == request.form['password']:
-            login_user(user)
-            return redirect('/')
+        validate_user(request)
+        return redirect('/')
     elif request.method == 'GET':
         return render_template('login.html', user=current_user)
-
-
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect('/')
 
 
 @app.route('/user_information')
@@ -52,6 +37,20 @@ def user_information():
     return render_template('user_information.html', user=current_user)
 
 
-@app.route('/create_event/<int:user_id>')
+@app.route('/create_event/<int:user_id>', methods=['GET', 'POST'])
 def create_event(user_id):
-    return redirect('/')
+    if request.method == 'POST':
+        add_event(request, user_id)
+        return redirect('/user_information')
+    elif request.method == 'GET':
+        return render_template('create_event.html', user=current_user)
+
+
+@app.route('/view_event/<int:event_id>')
+def view_event(event_id):
+    return render_template('view_events.html', events=get_event(event_id), user=current_user)
+
+
+@app.route('/view_events/<int:user_id>')
+def show_events(user_id):
+    return render_template('view_events.html', events=get_events(user_id), user=current_user)

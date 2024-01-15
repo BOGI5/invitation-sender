@@ -26,13 +26,13 @@ class Event(db.Model):
     name = db.Column(db.String(50), nullable=False)
     date = db.Column(db.DateTime, nullable=False)
     address = db.Column(db.String(250), nullable=False)
-    organizer_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    def __init__(self, name, date, address, organizer_id):
+    def __init__(self, name, date, address, user_id):
         self.name = name
         self.date = date
         self.address = address
-        self.organizer = organizer_id
+        self.user_id = user_id
 
     def __repr__(self):
         return f"<Event(name='{self.name}', date='{self.date}"

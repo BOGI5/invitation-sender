@@ -1,0 +1,23 @@
+{% extends "header.html" %}
+{% block title %}
+{% if events|length == 1 %}
+{{ events['name'] }}
+{% else %}
+Events
+{% endif %}
+{% endblock %}
+{% block body %}
+<div class="alert alert-info">
+        {% if events|length == 0 %}
+        <p>No events</p>
+        {% else %}
+        {% for event in events %}
+        <h1>{{ event["name"] }}</h1>
+        <h3>{{ event["date"] }}</h3>
+        <p>{{ event["address"] }}</p>
+        <a href="/delete_event/{{ event['id'] }}" class="btn btn-danger">Delete</a>
+        {% endfor %}
+{% endif %}
+</div>
+
+{% endblock %}
