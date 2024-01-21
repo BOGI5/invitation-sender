@@ -2,7 +2,8 @@
 {% block title %}Invitations{% endblock %}
 {% block body %}
 <div class="container">
-    <a href="/create_invitation/{{ event_id }}" class="btn btn-success">Add</a><br>
+    <a href="/create_invitation/{{ event_id }}" class="btn btn-success">Add</a>
+    <hr class="my-4">
 {% if invitations|length == 0 %}
     <p>No invitations</p>
     {% else %}

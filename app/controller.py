@@ -3,6 +3,7 @@ from app.model import *
 from flask import redirect, url_for
 from flask_login import login_user, logout_user, current_user
 from flask_mail import Message
+from sqlalchemy.exc import IntegrityError
 
 
 @loginManager.user_loader
@@ -11,16 +12,26 @@ def load_user(user_id):
 
 
 def create_user(request):
-    user = User(request.form['first_name'], request.form['last_name'], request.form['email'], request.form['password'])
-    db.session.add(user)
-    db.session.commit()
-    login_user(user)
+    try:
+        user = User(request.form['first_name'], request.form['last_name'], request.form['email'], request.form['password'])
+        db.session.add(user)
+        db.session.commit()
+        login_user(user)
+        return 0
+    except IntegrityError:
+        db.session.rollback()
+        return 1
 
 
 def validate_user(request):
     user = User.query.filter_by(email=request.form['email']).first()
+    if not user:
+        return 1
     if user.password == request.form['password']:
         login_user(user)
+        return 0
+    else:
+        return 2
 
 
 def get_users():
@@ -47,7 +58,7 @@ def delete_event(event_id):
     delete_all_invitations(event_id)
     db.session.delete(event)
     db.session.commit()
-    return redirect('/user_information')
+    return redirect(f"/view_events/{event.user_id}")
 
 
 def delete_all_events(user_id):
@@ -86,12 +97,16 @@ def get_invitations(event_id):
 
 
 def add_invitation(request, event_id):
-    invitation = Invitation(event_id=event_id,
+    try:
+        invitation = Invitation(event_id=event_id,
                             recipient_email=request.form['email'], recipient_names=request.form['names'])
-    db.session.add(invitation)
-    db.session.commit()
-    send_invitation(invitation)
-    return invitation.id
+        db.session.add(invitation)
+        db.session.commit()
+        send_invitation(invitation)
+        return invitation.id
+    except IntegrityError:
+        db.session.rollback()
+        return -1
 
 
 @app.route('/delete_invitation/<int:invitation_id>')

@@ -5,23 +5,24 @@
   <form method="POST">
     <h1 class="h3 mb-3 fw-normal">Please log in</h1>
 
-    <div class="form-floating">
-      <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com" minlength="1" maxlength="80">
+    <div class="form-floating {% if status == 1 %}has-danger{% endif %}">
+      <input name="email" type="email" class="form-control {% if status == 1 %}is-invalid{% endif %}" id="email" placeholder="name@example.com" required minlength="1" maxlength="80">
       <label for="email">Email address</label>
+    {% if status == 1 %}
+      <div class="invalid-feedback">No such user!</div>
+      {% endif %}
     </div>
-    <div class="form-floating">
-      <input name="password" type="password" class="form-control" id="password" placeholder="Password" minlength="1" maxlength="80">
+      <br>
+    <div class="form-floating {% if status == 2 %}has-danger{% endif %}">
+      <input name="password" type="password" class="form-control {% if status == 2 %}is-invalid{% endif %}" id="password" placeholder="Password" required minlength="1" maxlength="80">
       <label for="password">Password</label>
+    {% if status == 2 %}
+      <div class="invalid-feedback">Incorrect password</div>
+      {% endif %}
     </div>
+      <hr class="my-4">
 
-    <div class="form-check text-start my-3">
-      <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-      <label class="form-check-label" for="flexCheckDefault">
-        Remember me
-      </label>
-    </div>
     <button class="btn btn-primary w-100 py-2" type="submit">Login</button>
-    <p class="mt-5 mb-3 text-body-secondary">© 2017–2023</p>
   </form>
 </main>
 {% endblock %}

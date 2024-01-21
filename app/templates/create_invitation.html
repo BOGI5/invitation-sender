@@ -6,17 +6,19 @@
     <h1 class="h3 mb-3 fw-normal">Invitation</h1>
 
     <div class="form-floating">
-      <input name="names" type="text" class="form-control" id="names" placeholder="" minlength="1" maxlength="80">
+      <input name="names" type="text" class="form-control" id="names" placeholder="" required minlength="1" maxlength="80">
       <label for="names">Names</label>
     </div>
-
-      <div class="form-floating">
-      <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com" minlength="1" maxlength="80">
+      <br>
+      <div class="form-floating {% if status == -1 %}has-danger{% endif %}">
+      <input name="email" type="email" class="form-control {% if status == -1 %}is-invalid{% endif %}" id="email" placeholder="" required minlength="1" maxlength="80">
       <label for="email">Email address</label>
+      {% if status == -1 %}
+      <div class="invalid-feedback">Invitation with this email already exists!</div>
+      {% endif %}
     </div>
-
+      <hr class="my-4">
     <button class="btn btn-primary w-100 py-2" type="submit">Send</button>
-    <p class="mt-5 mb-3 text-body-secondary">© 2017–2023</p>
   </form>
 </main>
 {% endblock %}
