@@ -5,7 +5,7 @@
 
 Език: Python
 
-Модули: Flask, SQLAlchemy, PyMySQL, flask_mail
+Модули: Flask, SQLAlchemy, PyMySQL, flask_mail, flask_login
 
 Архитектура: MVC
 
