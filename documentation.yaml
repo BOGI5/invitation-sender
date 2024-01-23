@@ -1,0 +1,232 @@
+swagger: '2.0'
+info:
+  title: 'Invitation Sender API'
+  description: 'API documentation for the Invitation Sender application.'
+  version: '1.0'
+consumes:
+  - 'application/x-www-form-urlencoded'
+paths:
+  /create_user:
+    post:
+      tags:
+        - 'user'
+      summary: 'Create a new user'
+      consumes:
+        - 'application/x-www-form-urlencoded'
+      parameters:
+        - name: 'first_name'
+          in: 'formData'
+          type: 'string'
+          required: true
+          description: 'User first name'
+        - name: 'last_name'
+          in: 'formData'
+          type: 'string'
+          required: true
+          description: 'User last name'
+        - name: 'email'
+          in: 'formData'
+          type: 'string'
+          required: true
+          description: 'User email'
+        - name: 'password'
+          in: 'formData'
+          type: 'string'
+          required: true
+          description: 'User password'
+      responses:
+        200:
+          description: 'User created successfully'
+        400:
+          description: 'Bad request'
+
+  /login:
+    post:
+      tags:
+        - 'user'
+      summary: 'User login'
+      consumes:
+        - 'application/x-www-form-urlencoded'
+      parameters:
+        - name: 'email'
+          in: 'formData'
+          type: 'string'
+          required: true
+          description: 'User email'
+        - name: 'password'
+          in: 'formData'
+          type: 'string'
+          required: true
+          description: 'User password'
+      responses:
+        200:
+          description: 'Login successful'
+        401:
+          description: 'Unauthorized'
+
+  /create_event/{user_id}:
+    post:
+      tags:
+        - 'event'
+      summary: 'Create a new event'
+      consumes:
+        - 'application/x-www-form-urlencoded'
+      parameters:
+        - name: 'user_id'
+          in: 'path'
+          type: 'integer'
+          required: true
+        - name: 'name'
+          in: 'formData'
+          type: 'string'
+          required: true
+          description: 'Event name'
+        - name: 'date'
+          in: 'formData'
+          type: 'string'
+          required: true
+          description: 'Event date'
+        - name: 'address'
+          in: 'formData'
+          type: 'string'
+          required: true
+          description: 'Event address'
+      responses:
+        200:
+          description: 'Event created successfully'
+        401:
+          description: 'Unauthorized'
+        404:
+          description: 'User not found'
+
+  /view_event/{event_id}:
+    get:
+      tags:
+        - 'event'
+      summary: 'View event details'
+      parameters:
+        - name: 'event_id'
+          in: 'path'
+          type: 'integer'
+          required: true
+      responses:
+        200:
+          description: 'Event details retrieved successfully'
+        401:
+          description: 'Unauthorized'
+        404:
+          description: 'Event not found'
+
+  /view_events/{user_id}:
+    get:
+      tags:
+        - 'event'
+      summary: 'View user events'
+      parameters:
+        - name: 'user_id'
+          in: 'path'
+          type: 'integer'
+          required: true
+      responses:
+        200:
+          description: 'User events retrieved successfully'
+        401:
+          description: 'Unauthorized'
+        404:
+          description: 'User not found'
+
+  /show_invitations/{event_id}:
+    get:
+      tags:
+        - 'invitation'
+      summary: 'Show invitations for an event'
+      parameters:
+        - name: 'event_id'
+          in: 'path'
+          type: 'integer'
+          required: true
+      responses:
+        200:
+          description: 'Invitations retrieved successfully'
+        401:
+          description: 'Unauthorized'
+        404:
+          description: 'Event not found'
+
+  /create_invitation/{event_id}:
+    post:
+      tags:
+        - 'invitation'
+      summary: 'Create a new invitation for an event'
+      consumes:
+        - 'application/x-www-form-urlencoded'
+      parameters:
+        - name: 'event_id'
+          in: 'path'
+          type: 'integer'
+          required: true
+        - name: 'email'
+          in: 'formData'
+          type: 'string'
+          required: true
+          description: 'Recipient email'
+        - name: 'names'
+          in: 'formData'
+          type: 'string'
+          required: true
+          description: 'Recipient names'
+      responses:
+        200:
+          description: 'Invitation created successfully'
+        401:
+          description: 'Unauthorized'
+        404:
+          description: 'Event not found'
+
+  /delete_invitation/{invitation_id}:
+    get:
+      tags:
+        - 'invitation'
+      summary: 'Delete invitation'
+      parameters:
+        - name: 'invitation_id'
+          in: 'path'
+          type: 'integer'
+          required: true
+      responses:
+        200:
+          description: 'Invitation deleted successfully'
+        401:
+          description: 'Unauthorized'
+        404:
+          description: 'Invitation not found'
+
+  /reply_invitation/{invitation_id}:
+    post:
+      tags:
+        - 'invitation'
+      summary: 'Reply to invitation'
+      consumes:
+        - 'application/x-www-form-urlencoded'
+      parameters:
+        - name: 'invitation_id'
+          in: 'path'
+          type: 'integer'
+          required: true
+        - name: 'reply'
+          in: 'formData'
+          type: 'string'
+          required: true
+          description: 'Reply (yes or no)'
+        - name: 'pin'
+          in: 'formData'
+          type: 'string'
+          required: true
+          description: 'PIN for confirmation'
+      responses:
+        200:
+          description: 'Reply processed successfully'
+        401:
+          description: 'Unauthorized'
+        404:
+          description: 'Invitation not found'

@@ -43,7 +43,11 @@ def user_information():
 @app.route('/create_event/<int:user_id>', methods=['GET', 'POST'])
 def create_event(user_id):
     if request.method == 'POST':
-        return redirect(f"/show_invitations/{add_event(request, user_id)}")
+        status = add_event(request, user_id)
+        if status != 400:
+            return redirect(f"/show_invitations/{status}")
+        else:
+            return render_template('create_event.html', user=current_user)
     elif request.method == 'GET':
         return render_template('create_event.html', user=current_user)
 

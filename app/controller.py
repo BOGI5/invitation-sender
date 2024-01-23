@@ -77,11 +77,14 @@ def delete_all_invitations(event_id):
 
 
 def add_event(request, user_id):
-    event = Event(name=request.form['name'], date=request.form['date'], address=request.form['address'],
+    try:
+        event = Event(name=request.form['name'], date=request.form['date'], address=request.form['address'],
                   user_id=user_id)
-    db.session.add(event)
-    db.session.commit()
-    return event.id
+        db.session.add(event)
+        db.session.commit()
+        return event.id
+    except Exception:
+        return 400
 
 
 def get_event(event_id):
