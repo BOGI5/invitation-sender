@@ -22,10 +22,10 @@ class AppTestCase(unittest.TestCase):
 
     def test_create_user(self):
         user_data = {
-            'first_name': 'John',
-            'last_name': 'Doe',
-            'email': 'john@example.com',
-            'password': 'password123'
+            'first_name': 'test_first_name',
+            'last_name': 'test_last_name',
+            'email': 'test@email.com',
+            'password': 'testPassword123'
         }
         with app.test_request_context('/'):
             request.form = user_data
@@ -34,7 +34,7 @@ class AppTestCase(unittest.TestCase):
         with app.app_context():
             user = User.query.filter_by(email=user_data['email']).first()
             self.assertIsNotNone(user)
-            self.assertEqual(user.first_name, 'John')
+            self.assertEqual(user.first_name, 'test_first_name')
 
         with app.test_request_context('/'):
             request.form = user_data
@@ -43,28 +43,28 @@ class AppTestCase(unittest.TestCase):
 
     def test_validate_user(self):
         user_data = {
-            'first_name': 'John',
-            'last_name': 'Doe',
-            'email': 'john@example.com',
-            'password': 'password123'
+            'first_name': 'test_first_name',
+            'last_name': 'test_last_name',
+            'email': 'test@email.com',
+            'password': 'testPassword123'
         }
         with app.test_request_context('/'):
             request.form = user_data
             create_user(request)
 
         with app.test_request_context('/'):
-            response = self.app.post('/login', data={'email': 'john@example.com', 'password': 'password123'})
+            response = self.app.post('/login', data={'email': 'test@email.com', 'password': 'testPassword123'})
             self.assertEqual(response.status_code, 302)
 
-        response = self.app.post('/login', data={'email': 'nonexistent@example.com', 'password': 'wrongpassword'})
+        response = self.app.post('/login', data={'email': 'incorrect@email.com', 'password': 'incorrectPassword'})
         self.assertEqual(response.status_code, 200)
 
     def test_add_event(self):
         user_data = {
-            'first_name': 'John',
-            'last_name': 'Doe',
-            'email': 'john@example.com',
-            'password': 'password123'
+            'first_name': 'test_first_name',
+            'last_name': 'test_last_name',
+            'email': 'test@email.com',
+            'password': 'testPassword123'
         }
         with app.test_request_context('/'):
             request.form = user_data
@@ -77,7 +77,7 @@ class AppTestCase(unittest.TestCase):
         event_data = {
             'name': 'Birthday Party',
             'date': '2024-01-23',
-            'address': '123 Main St',
+            'address': '123 Bulgaria blvd.',
             'user_id': user.id
         }
         with app.test_request_context('/'):
@@ -88,7 +88,7 @@ class AppTestCase(unittest.TestCase):
         invalid_event_data = {
             'name': '',
             'date': 'invalid-date',
-            'address': '123 Main St',
+            'address': '123 Bulgaria blvd.',
             'user_id': user.id
         }
         with app.test_request_context('/'):
